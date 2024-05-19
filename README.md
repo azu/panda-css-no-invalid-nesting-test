@@ -1,4 +1,49 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# `@pandacss/no-invalid-nesting` false positive
+
+## usage
+
+```bash
+pnpm install
+pnpm run lint
+./src/app/Heading.tsx
+23:13  Error: Invalid style nesting. Nested styles must contain the `&` character.  @pandacss/no-invalid-nesting
+```
+
+```tsx
+const heading = cva({
+    base: {
+        fontWeight: "strong",
+        lineHeight: "m",
+    },
+    variants: {
+        size: {
+            "2xl": {
+                fontSize: "2xl",
+            },
+            l: {
+                fontSize: "l",
+            },
+            m: {
+                fontSize: "m",
+            },
+            s: {
+                fontSize: "s",
+            },
+            "2xs": { 
+            // ^ Error: Invalid style nesting. Nested styles must contain the `&` character.  @pandacss/no-invalid-nesting     
+                fontSize: "2xs",
+            },
+        },
+    },
+    defaultVariants: {
+        size: "2xl",
+    },
+});
+```
+
+Is this `&` character really necessary? I think it's a false positive?
+
+----
 
 ## Getting Started
 
